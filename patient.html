@@ -22,12 +22,7 @@ Test:
 
 <script>
 function save(){
-  fetch("PASTE_YOUR_SCRIPT_URL_HERE", {https://script.google.com/macros/s/AKfycbwVTHqnOQVC7OaWksuTLTAoVP2mkcm3tL0pOlOsan3qG_HXR_4f7q8XNmqbEBNzmgwX/exec
-    method: "POST",
-    body: JSON.stringify({
-      pid: document.getElementById("pid").value,
-      name: document.getElementById("name").value,
-      age: document.getElementById("age").value,
+  fetch("https://script.google.com/macros/s/AKfycbwVTHqnOQVC7OaWksuTLTAoVP2mkcm3tL0pOlOsan3qG_HXR_4f7q8XNmqbEBNzmgwX/exec", {
       test: document.getElementById("test").value
     })
   }).then(res=>res.text())
