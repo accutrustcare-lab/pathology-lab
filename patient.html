@@ -10,26 +10,47 @@ Age: <input id="age"><br><br>
 
 Test:
 <select id="test">
-  <option>CBC</option>
   <option>Blood Sugar</option>
+  <option>CBC</option>
   <option>HB</option>
 </select>
 <br><br>
 
-<button onclick="save()">Save Patient</button>
+<button onclick="savePatient()">Save Patient</button>
 
 <p id="msg"></p>
 
+<hr>
+
+<h3>Saved Patients</h3>
+<ul id="list"></ul>
+
 <script>
-function save(){
-  fetch("https://script.google.com/macros/s/AKfycbwVTHqnOQVC7OaWksuTLTAoVP2mkcm3tL0pOlOsan3qG_HXR_4f7q8XNmqbEBNzmgwX/exec", {
-      test: document.getElementById("test").value
-    })
-  }).then(res=>res.text())
-    .then(data=>{
-      document.getElementById("msg").innerHTML = "✅ Data Saved";
-    });
+let patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+function savePatient(){
+  let data = {
+    pid: pid.value,
+    name: name.value,
+    age: age.value,
+    test: test.value
+  };
+
+  patients.push(data);
+  localStorage.setItem("patients", JSON.stringify(patients));
+  document.getElementById("msg").innerText = "✅ Patient Saved";
+  showPatients();
 }
+
+function showPatients(){
+  let html = "";
+  patients.forEach(p=>{
+    html += `<li>${p.pid} - ${p.name} - ${p.test}</li>`;
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+showPatients();
 </script>
 
 </body>
