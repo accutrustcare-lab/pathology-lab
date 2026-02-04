@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Manage Tests</h2>
+
+Test Name: <input id="tname">
+Price: <input id="price">
+<button onclick="add()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+let tests = JSON.parse(localStorage.getItem("tests")) || [];
+
+function add(){
+  tests.push({name:tname.value, price:price.value});
+  localStorage.setItem("tests", JSON.stringify(tests));
+  show();
+}
+
+function show(){
+  list.innerHTML="";
+  tests.forEach(t=>{
+    list.innerHTML += `<li>${t.name} - ₹${t.price}</li>`;
+  });
+}
+show();
+</script>
+
+</body>
+</html>
