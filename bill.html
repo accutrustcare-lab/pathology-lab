@@ -4,12 +4,33 @@
 
 <h2>Billing</h2>
 
-Test: CBC<br>
-Amount: ₹300<br><br>
+<select id="patients" onchange="fill()">
+  <option>Select Patient</option>
+</select>
 
-<b>Total: ₹300</b><br><br>
+<p id="bill"></p>
 
 <button onclick="window.print()">Print Bill</button>
+
+<script>
+let patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+patients.forEach((p,i)=>{
+  patientsSelect = document.getElementById("patients");
+  patientsSelect.innerHTML += `<option value="${i}">${p.pid} - ${p.name}</option>`;
+});
+
+function fill(){
+  let p = patients[patientsSelect.value];
+  let price = p.test=="Blood Sugar"?150:300;
+  document.getElementById("bill").innerHTML = `
+    Name: ${p.name}<br>
+    Test: ${p.test}<br>
+    Amount: ₹${price}<br>
+    <b>Total: ₹${price}</b>
+  `;
+}
+</script>
 
 </body>
 </html>
