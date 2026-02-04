@@ -4,14 +4,68 @@
 
 <h2 style="text-align:center">PATHOLOGY REPORT</h2>
 
-Patient Name: _______<br>
-Test: CBC<br>
-Result: Normal<br><br>
+<select id="patients" onchange="fillReport()">
+  <option>Select Patient</option>
+</select>
 
-Lab Signature: __________
+<hr>
+
+<div id="reportBox" style="display:none">
+
+<b>Patient Name:</b> <span id="name"></span><br>
+<b>Age:</b> <span id="age"></span><br>
+<b>Test:</b> <span id="test"></span><br>
+<b>Date:</b> <span id="date"></span><br><br>
+
+<table border="1" width="100%" cellpadding="5">
+<tr>
+  <th>Test</th>
+  <th>Result</th>
+  <th>Normal Range</th>
+</tr>
+<tr>
+  <td id="tname"></td>
+  <td id="result"></td>
+  <td id="range"></td>
+</tr>
+</table>
+
+<br><br>
+<b>Lab Technician Signature</b>
 
 <br><br>
 <button onclick="window.print()">Print Report</button>
+</div>
+
+<script>
+let patients = JSON.parse(localStorage.getItem("patients")) || [];
+let sel = document.getElementById("patients");
+
+patients.forEach((p,i)=>{
+  sel.innerHTML += `<option value="${i}">${p.pid} - ${p.name}</option>`;
+});
+
+function fillReport(){
+  let p = patients[sel.value];
+  if(!p) return;
+
+  document.getElementById("reportBox").style.display="block";
+  document.getElementById("name").innerText = p.name;
+  document.getElementById("age").innerText = p.age;
+  document.getElementById("test").innerText = p.test;
+  document.getElementById("date").innerText = new Date().toLocaleDateString();
+
+  document.getElementById("tname").innerText = p.test;
+
+  if(p.test=="Blood Sugar"){
+    document.getElementById("result").innerText = "95 mg/dL";
+    document.getElementById("range").innerText = "70 – 110 mg/dL";
+  } else {
+    document.getElementById("result").innerText = "Normal";
+    document.getElementById("range").innerText = "Normal";
+  }
+}
+</script>
 
 </body>
 </html>
