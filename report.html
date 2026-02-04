@@ -37,7 +37,11 @@
 </table>
 
 <br><br>
-<b>Lab Technician Signature</b>
+<br>
+<input type="checkbox" id="sig" onchange="toggleSig()"> Show Doctor Signature
+<br><br>
+
+<img id="signature" src="sign.png" style="display:none;height:60px">
 
 <br><br>
 <button onclick="window.print()">Print Report</button>
@@ -46,7 +50,12 @@
 <script>
 let patients = JSON.parse(localStorage.getItem("patients")) || [];
 let sel = document.getElementById("patients");
-
+<script>
+function toggleSig(){
+  document.getElementById("signature").style.display =
+  document.getElementById("sig").checked ? "block" : "none";
+}
+</script>
 patients.forEach((p,i)=>{
   sel.innerHTML += `<option value="${i}">${p.pid} - ${p.name}</option>`;
 });
